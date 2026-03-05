@@ -9,42 +9,58 @@ import java.util.Scanner;
 public class ContactApp {
 
     private static List<User> users = new ArrayList<>();
+    // making a list of User type. it contains ojects
+    
+    private static User loggedInUser = null;
 
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        while (true) {
+        while (true) { //contiuing the loop until we exit
 
             System.out.println("\n===== MyContacts App =====");
-            System.out.println("1. Register");
-            System.out.println("2. Login (Basic - Username)");
-            System.out.println("3. Login (Open - Email)");
 
-            System.out.println("4. Exit");
+            if (loggedInUser == null) { // if not logged in the register
+                System.out.println("1. Register");
+                System.out.println("2. Login (Basic)");
+                System.out.println("3. Login (Open)");
+                System.out.println("4. Exit");
+            } else {
+            	// if logged in then do profile management or logout.
+                System.out.println("1. Profile Management");
+                System.out.println("2. Logout");
+                System.out.println("3. Exit");
+            }
 
             System.out.print("Enter choice: ");
             int choice = sc.nextInt();
-            sc.nextLine();  
+            sc.nextLine();
 
-            switch (choice) {
-                case 1:
-                    registerUser();
-                    break;
-                case 2:
-                    basicLogin();
-                    break;
-                case 3:
-                    openLogin();
-                    break;
-                case 4:
-                    System.out.println("Exiting application...");
-                    return;
-                default:
-                    System.out.println("Invalid choice!");
+            if (loggedInUser == null) {
+
+                switch (choice) {
+                    case 1 -> registerUser();
+                    case 2 -> basicLogin();
+                    case 3 -> openLogin();
+                    case 4 -> { return; }
+                    default -> System.out.println("Invalid choice!");
+                    // calling different methods based on the input
+                }
+
+            } else {
+
+                switch (choice) {
+                    case 1 -> profileManagement();
+                    case 2 -> logout();
+                    case 3 -> { return; }
+                    default -> System.out.println("Invalid choice!");
+                 // calling different methods based on the input
+                }
             }
         }
     }
+
 
     
     // USE CASE 1 - Registration
@@ -75,6 +91,8 @@ public class ContactApp {
 
             System.out.print("Enter Type (FREE / PREMIUM): ");
             String type = sc.nextLine();
+            
+            // taking all necessary inputs
 
             User user;
 
@@ -86,6 +104,7 @@ public class ContactApp {
                 System.out.println("Invalid user type!");
                 return;
             }
+            // making user object bsed on the userType(Free of premium)
 
             users.add(user);
             System.out.println("User Registered Successfully!");
@@ -110,6 +129,7 @@ public class ContactApp {
         User user = auth.login(username, password);
 
         if (user != null) {
+        	loggedInUser = user; // changing logged in from null to and object
             System.out.println("Basic Login Successful!");
             System.out.println("Welcome " + user.getName());
         } else {
@@ -131,12 +151,35 @@ public class ContactApp {
         User user = auth.login(email, password);
 
         if (user != null) {
+        	loggedInUser = user;
             System.out.println("Open Login Successful!");
             System.out.println("Welcome " + user.getName());
         } else {
             System.out.println("Invalid Email or Password");
         }
     }
+    
+    // Profile Management
+    private static void profileManagement() {
+
+        if (loggedInUser == null) {
+            System.out.println("Please login first!");
+            return;
+        }
+
+        ProfileManager manager = new ProfileManager(loggedInUser); // passing the particular user object
+        manager.manageProfile(); // calling the method to update profile
+    }
+    
+    
+    // Logout
+    private static void logout() {
+        loggedInUser = null;
+        // if i log out then the loggedIn object will be null;
+        System.out.println("Logged out successfully!");
+    }
+
+
 
    
 }
