@@ -1,9 +1,3 @@
-/**
- * @author AmIT
- * @version 9.0
- * 
- * This is updated for use case 9 Search Contacts
- */
 
 package com.main;
 
