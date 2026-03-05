@@ -66,8 +66,6 @@ public class ContactApp {
             }
         }
     }
-
-
     
     // USE CASE 1 - Registration
     
@@ -187,7 +185,6 @@ public class ContactApp {
     
     // Contact Management
     
-    // USE case 4
     
     private static void contactManagement() {
 
@@ -201,15 +198,16 @@ public class ContactApp {
         AddContact addContact = new AddContact(); // created Add contact object
         ViewContact viewcontact = new ViewContact(); // created view contact object
         EditContact edit = new EditContact(); // created edit contact object;
-
+        DeleteContact delete = new DeleteContact();
         while (true) {
 
             System.out.println("\n--- Contact Management ---");
             System.out.println("1. Add Contact");
             System.out.println("2. View Contacts");
             System.out.println("3. Edit Contact");
-            
-            System.out.println("4. Back");
+            System.out.println("4. Delete Contact");
+            System.out.println("5. Bulk Delete Contact");
+            System.out.println("6. Back");
 
             System.out.print("Enter choice: ");
             int choice = sc.nextInt();
@@ -224,9 +222,18 @@ public class ContactApp {
                         break;
 
                     case 2: 
+                    	if(contactManager.getContacts().size() == 0) {
+                    		System.out.println("No contacts to view");
+                    		break;
+                    		
+                    	}
                     	viewcontact.viewContact(contactManager);
-                    	break;
+                		break;
                     case 3:
+                    	if(contactManager.getContacts().size() == 0) {
+                    		System.out.println("No contacts to edit");
+                    		break;
+                    	}
                     	viewcontact.viewContact(contactManager);
                     	System.out.println("Enter the index number to update");
                     	int index = sc.nextInt() - 1;
@@ -242,8 +249,28 @@ public class ContactApp {
                     	String newMail = sc.nextLine();
                     	
                     	edit.update(contactManager, index, newName, newNum, newMail);
-                    	
+                    	break;
                     case 4:
+                    	if(contactManager.getContacts().size() == 0) {
+                    		System.out.println("No contacts to delete");
+
+                    		break;
+                    	}
+                    	viewcontact.viewContact(contactManager);
+                    	System.out.println("Enter the index number to delete");
+                    	index = sc.nextInt() - 1;
+                    	sc.nextLine();
+                    	delete.delete(contactManager, index, loggedInUser);
+                    	break;
+                    case 5:
+                    	if(contactManager.getContacts().size() == 0) {
+                    		System.out.println("No contacts to delete");
+                    		break;
+                    	}
+                    	
+                    	BulkOperation bulk = new BulkOperation();
+                    	bulk.bulkDelete(contactManager, loggedInUser);
+                    case 6:
                         return;
 
                     default:
@@ -255,9 +282,4 @@ public class ContactApp {
             }
         }
     }
-
-
-
-
-   
 }
