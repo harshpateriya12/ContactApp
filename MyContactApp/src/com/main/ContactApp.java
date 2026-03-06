@@ -1,9 +1,4 @@
-/**
- * @author AmIT
- * @version 9.0
- * 
- * This is updated for use case 9 Search Contacts
- */
+
 
 package com.main;
 
@@ -131,15 +126,14 @@ public class ContactApp {
         }
 
         ProfileManager manager = new ProfileManager(loggedInUser); // passing the particular user object
-        manager.manageProfile(); // calling the method to update profile
+        manager.manageProfile(); // calling method to update profile
     }
     
     
     // Logout
     private static void logout() {
         loggedInUser = null;
-        // if i log out then the loggedIn object will be null;
+        
         System.out.println("Logged out successfully!");
     }
-    
 }

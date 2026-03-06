@@ -8,16 +8,12 @@ public class Manage {
 	private static ContactManager contactManager = new ContactManager();
     public static void contactManagement(User loggedInUser) {
 
-//        if (loggedInUser == null) {// first checking if logged in or not
-//            System.out.println("Please login first!");
-//            return;
-//        }
 
         Scanner sc = new Scanner(System.in);
 
-        AddContact addContact = new AddContact(); // created Add contact object
-        ViewContact viewcontact = new ViewContact(); // created view contact object
-        EditContact edit = new EditContact(); // created edit contact object;
+        AddContact addContact = new AddContact(); // Add contact object
+        ViewContact viewcontact = new ViewContact(); //view contact object
+        EditContact edit = new EditContact(); //edit contact object;
         DeleteContact delete = new DeleteContact();
         while (true) {
 
@@ -28,7 +24,8 @@ public class Manage {
             System.out.println("4. Delete Contact");
             System.out.println("5. Bulk Delete Contact");
             System.out.println("6. Search Contacts");
-            System.out.println("7. Back");
+            System.out.println("7. Filter Contacts");
+            System.out.println("8. Back");
 
             System.out.print("Enter choice: ");
             int choice = sc.nextInt();
@@ -95,6 +92,9 @@ public class Manage {
                     	SearchManager searchManager = new SearchManager();
                     	searchManager.search(contactManager);
                     case 7:
+                    	ManagerFilter filterManager = new FilterManager();
+                    	filterManager.applyFilter(contactManager);
+                    case 8:
                         return;
 
                     default:
