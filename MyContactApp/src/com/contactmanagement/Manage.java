@@ -9,16 +9,12 @@ public class Manage {
 	private static TagManager tagManager = new TagManager();
     public static void contactManagement(User loggedInUser) {
 
-//        if (loggedInUser == null) {// first checking if logged in or not
-//            System.out.println("Please login first!");
-//            return;
-//        }
 
         Scanner sc = new Scanner(System.in);
 
-        AddContact addContact = new AddContact(); // created Add contact object
-        ViewContact viewcontact = new ViewContact(); // created view contact object
-        EditContact edit = new EditContact(); // created edit contact object;
+        AddContact addContact = new AddContact(); //Add contact object
+        ViewContact viewcontact = new ViewContact(); // view contact object
+        EditContact edit = new EditContact(); // edit contact object
         DeleteContact delete = new DeleteContact();
         while (true) {
 
@@ -32,7 +28,9 @@ public class Manage {
             System.out.println("7. Filter Contacts");
             System.out.println("8. Create Tag");
             System.out.println("9. View All Tags");
-            System.out.println("10. Back");
+            System.out.println("10. Assign Tags to Contacts");
+            System.out.println("11. Remove Tag from Contacts");
+            System.out.println("12. Back");
 
             System.out.print("Enter choice: ");
             int choice = sc.nextInt();
@@ -95,12 +93,15 @@ public class Manage {
                     	
                     	BulkOperation bulk = new BulkOperation();
                     	bulk.bulkDelete(contactManager, loggedInUser);
+                    	break;
                     case 6:
                     	SearchManager searchManager = new SearchManager();
                     	searchManager.search(contactManager);
+                    	break;
                     case 7:
                     	ManagerFilter filterManager = new ManagerFilter();
                     	filterManager.applyFilter(contactManager);
+                    	break;
                     case 8:
                     	tagManager.createTag();
                         break;
@@ -108,6 +109,14 @@ public class Manage {
                     	tagManager.viewTags();
                         break;
                     case 10:
+                    	AddTags addtag = new AddTags();
+                        addtag.assign(contactManager, tagManager);
+                        break;
+                    case 11:
+                    	RemoveTag removetag = new RemoveTag();
+                    	removetag.remove(contactManager, tagManager);
+                    	break;
+                    case 12:
                         return;
 
                     default:
